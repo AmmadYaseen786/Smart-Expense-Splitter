@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Splitter - Dashboard</title>
+    <!-- Outfit Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">S</div>
+            <div class="logo-text">Splitter</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+            <li><a href="groups.html"><i class="fa-solid fa-users"></i><span>Groups</span></a></li>
+            <li><a href="group-expenses.html"><i class="fa-solid fa-file-invoice-dollar"></i><span>Group Expenses</span></a></li>
+            <li><a href="personal-expenses.html"><i class="fa-solid fa-user-lock"></i><span>Personal Expenses</span></a></li>
+            <li><a href="balances.html"><i class="fa-solid fa-scale-balanced"></i><span>Balances</span></a></li>
+            <li><a href="settlement-history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Settlement History</span></a></li>
+        </ul>
+        <div class="sidebar-user">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-initial">-</div>
+                <div class="user-name" id="user-profile-name">Loading...</div>
+            </div>
+            <button onclick="logout()" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem;">
+                <i class="fa-solid fa-right-from-bracket"></i> Log Out
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Overview Dashboard</h1>
+                <p>Welcome back! Monitor your group splits and private personal expenses.</p>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <section class="dashboard-grid">
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Personal Expenses</h3>
+                    <div class="value" id="stat-personal-total">Rs. 0.00</div>
+                </div>
+                <div class="stat-icon icon-indigo">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Group Shared Share</h3>
+                    <div class="value" id="stat-group-total">Rs. 0.00</div>
+                </div>
+                <div class="stat-icon icon-emerald">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>You Owe (Outstanding)</h3>
+                    <div class="value" id="stat-owe-total" style="color: var(--warning);">Rs. 0.00</div>
+                </div>
+                <div class="stat-icon icon-amber">
+                    <i class="fa-solid fa-arrow-up-long"></i>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>You Are Owed</h3>
+                    <div class="value" id="stat-owed-total" style="color: var(--success);">Rs. 0.00</div>
+                </div>
+                <div class="stat-icon icon-rose">
+                    <i class="fa-solid fa-arrow-down-long"></i>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Pending Settlements</h3>
+                    <div class="value" id="stat-pending-settlements-count">0</div>
+                </div>
+                <div class="stat-icon" style="background-color: var(--secondary); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Settlements Completed</h3>
+                    <div class="value" id="stat-completed-settlements-count">0</div>
+                </div>
+                <div class="stat-icon icon-emerald">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Total Amount Settled</h3>
+                    <div class="value" id="stat-total-amount-settled">Rs. 0.00</div>
+                </div>
+                <div class="stat-icon icon-indigo">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Split Layout (Recent Expenses + Quick Links) -->
+        <section class="content-grid">
+            <!-- Recent Combined Expenses -->
+            <div class="card">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:1.25rem;">Recent Activity</h2>
+                <div class="table-container">
+                    <table class="table" id="recent-expenses-table">
+                        <thead>
+                            <tr>
+                                <th>Expense Title</th>
+                                <th>Amount</th>
+                                <th>Category / Group</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--text-muted);">Loading activity...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Shortcuts -->
+            <div class="card" style="display:flex; flex-direction:column; gap:0.75rem;">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:0.25rem;">Quick Navigation</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Shortcut options to manage splits.</p>
+
+                <a href="groups.html" class="btn btn-secondary" style="text-align: left; justify-content: flex-start; padding: 0.9rem;">
+                    <i class="fa-solid fa-users" style="color: var(--secondary); font-size: 1rem; width: 20px;"></i>
+                    Manage Groups & Members
+                </a>
+                <a href="group-expenses.html" class="btn btn-secondary" style="text-align: left; justify-content: flex-start; padding: 0.9rem;">
+                    <i class="fa-solid fa-cart-plus" style="color: var(--primary); font-size: 1rem; width: 20px;"></i>
+                    Record Group Split Expense
+                </a>
+                <a href="personal-expenses.html" class="btn btn-secondary" style="text-align: left; justify-content: flex-start; padding: 0.9rem;">
+                    <i class="fa-solid fa-lock" style="color: #6366f1; font-size: 1rem; width: 20px;"></i>
+                    Track Private Personal Cost
+                </a>
+                <a href="balances.html" class="btn btn-primary" style="text-align: left; justify-content: flex-start; padding: 0.9rem;">
+                    <i class="fa-solid fa-scale-balanced" style="font-size: 1rem; width: 20px;"></i>
+                    View Group Split Balances
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

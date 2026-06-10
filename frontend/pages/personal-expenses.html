@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Splitter - Personal Expenses</title>
+    <!-- Outfit Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">S</div>
+            <div class="logo-text">Splitter</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+            <li><a href="groups.html"><i class="fa-solid fa-users"></i><span>Groups</span></a></li>
+            <li><a href="group-expenses.html"><i class="fa-solid fa-file-invoice-dollar"></i><span>Group Expenses</span></a></li>
+            <li class="active"><a href="personal-expenses.html"><i class="fa-solid fa-user-lock"></i><span>Personal Expenses</span></a></li>
+            <li><a href="balances.html"><i class="fa-solid fa-scale-balanced"></i><span>Balances</span></a></li>
+            <li><a href="settlement-history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Settlement History</span></a></li>
+        </ul>
+        <div class="sidebar-user">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-initial">-</div>
+                <div class="user-name" id="user-profile-name">Loading...</div>
+            </div>
+            <button onclick="logout()" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem;">
+                <i class="fa-solid fa-right-from-bracket"></i> Log Out
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Personal Expenses</h1>
+                <p>Track your private outlays. These items are strictly confidential and visible only to you.</p>
+            </div>
+        </header>
+
+        <!-- Content Grid (Form + List) -->
+        <section class="content-grid">
+            <!-- Record Personal Expense Card -->
+            <div class="card">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:1.25rem;">Log Private Expense</h2>
+                <form id="personal-form">
+                    <div class="form-group">
+                        <label for="pe-title">Title / Name</label>
+                        <input type="text" id="pe-title" class="form-control" placeholder="e.g., Book buy" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pe-amount">Amount Spent (Rs.)</label>
+                        <input type="number" step="0.01" min="0.01" id="pe-amount" class="form-control" placeholder="e.g., 850" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pe-category">Category</label>
+                        <select id="pe-category" class="form-control" required>
+                            <option value="Food">Food & Dining</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Travel">Travel & Fuel</option>
+                            <option value="Utilities">Bills & Utilities</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Other" selected>Other / General</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Record Expense</button>
+                </form>
+            </div>
+
+            <!-- List Card -->
+            <div class="card">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:1.25rem;">My Private Log</h2>
+                <div class="table-container">
+                    <table class="table" id="personal-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-muted);">Loading private records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/personal-expenses.js"></script>
+</body>
+</html>

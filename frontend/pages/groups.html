@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Splitter - Manage Groups</title>
+    <!-- Outfit Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">S</div>
+            <div class="logo-text">Splitter</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+            <li class="active"><a href="groups.html"><i class="fa-solid fa-users"></i><span>Groups</span></a></li>
+            <li><a href="group-expenses.html"><i class="fa-solid fa-file-invoice-dollar"></i><span>Group Expenses</span></a></li>
+            <li><a href="personal-expenses.html"><i class="fa-solid fa-user-lock"></i><span>Personal Expenses</span></a></li>
+            <li><a href="balances.html"><i class="fa-solid fa-scale-balanced"></i><span>Balances</span></a></li>
+            <li><a href="settlement-history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Settlement History</span></a></li>
+        </ul>
+        <div class="sidebar-user">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-initial">-</div>
+                <div class="user-name" id="user-profile-name">Loading...</div>
+            </div>
+            <button onclick="logout()" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem;">
+                <i class="fa-solid fa-right-from-bracket"></i> Log Out
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Group Management</h1>
+                <p>Create groups with friends, roommates, or university peers to split expenses.</p>
+            </div>
+        </header>
+
+        <!-- Content Split (Create Group + List of Groups) -->
+        <section class="content-grid">
+            <!-- Create Group Card -->
+            <div class="card">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:1.25rem;">Create New Group</h2>
+                <form id="group-form">
+                    <div class="form-group">
+                        <label for="group-name">Group Name</label>
+                        <input type="text" id="group-name" class="form-control" placeholder="e.g., Roommates" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group-desc">Description (Optional)</label>
+                        <textarea id="group-desc" class="form-control" rows="3" placeholder="e.g., Shared hostel and grocery splits"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Create Group</button>
+                </form>
+            </div>
+
+            <!-- Groups List & Details Card -->
+            <div class="card">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:1.25rem;">My Active Groups</h2>
+                
+                <div class="form-group">
+                    <label for="group-selector">Select Group to View Details</label>
+                    <select id="group-selector" class="form-control">
+                        <option value="">Choose a Group...</option>
+                    </select>
+                </div>
+
+                <!-- Group details block -->
+                <div id="group-details-area" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 1rem;">
+                        <div>
+                            <h3 id="detail-group-name" style="font-size: 1.4rem; font-weight: 700; color: var(--primary);">Group Name</h3>
+                            <p id="detail-group-desc" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Group description goes here.</p>
+                        </div>
+                    </div>
+
+                    <!-- Grid inside details: Add Member + Member List -->
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1rem;">
+                        <!-- Add Member by Email -->
+                        <div style="background-color:#11182740; border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 10px;">
+                            <h4 style="font-size:1rem; font-weight:600; margin-bottom:1rem;"><i class="fa-solid fa-user-plus"></i> Add Group Member</h4>
+                            <form id="add-member-form" style="display: flex; gap: 0.5rem;">
+                                <input type="email" id="member-email" class="form-control" placeholder="User email address" required>
+                                <button type="submit" class="btn btn-primary" style="width: auto;">Add</button>
+                            </form>
+                            <span style="font-size:0.75rem; color:var(--text-muted); display:block; margin-top:0.4rem;">Add registered users using their email address.</span>
+                        </div>
+
+                        <!-- Member List Table -->
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:600; margin-bottom:0.75rem;"><i class="fa-solid fa-users"></i> Member Roster</h4>
+                            <div class="table-container">
+                                <table class="table" id="members-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" style="text-align: center; color: var(--text-muted);">No members found.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/groups.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Splitter - Register</title>
+    <!-- Outfit Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="auth-body">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="logo-icon" style="margin: 0 auto;">S</div>
+            <h1>Create Account</h1>
+            <p>Sign up to start splitting shared bills with friends.</p>
+        </div>
+
+        <form id="register-form">
+            <div class="form-group">
+                <label for="reg-name">Full Name</label>
+                <input type="text" id="reg-name" class="form-control" placeholder="e.g., Ammad" required>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-email">Email Address</label>
+                <input type="email" id="reg-email" class="form-control" placeholder="e.g., ammad@gmail.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" class="form-control" placeholder="Minimum 6 characters" minlength="6" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Register</button>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="login.html">Log in here</a>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+
+            const form = document.getElementById('register-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('reg-name').value.trim();
+                const email = document.getElementById('reg-email').value.trim();
+                const password = document.getElementById('reg-password').value.trim();
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        showToast('Account registered successfully! Redirecting...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 1200);
+                    } else {
+                        showToast(data.message || 'Registration failed. Email might already exist.', 'danger');
+                    }
+                } catch (error) {
+                    console.error('Error registering:', error);
+                    showToast('Failed to connect to backend server.', 'danger');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

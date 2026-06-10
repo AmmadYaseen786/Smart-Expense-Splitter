@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Splitter - Group Expenses</title>
+    <!-- Outfit Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">S</div>
+            <div class="logo-text">Splitter</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+            <li><a href="groups.html"><i class="fa-solid fa-users"></i><span>Groups</span></a></li>
+            <li class="active"><a href="group-expenses.html"><i class="fa-solid fa-file-invoice-dollar"></i><span>Group Expenses</span></a></li>
+            <li><a href="personal-expenses.html"><i class="fa-solid fa-user-lock"></i><span>Personal Expenses</span></a></li>
+            <li><a href="balances.html"><i class="fa-solid fa-scale-balanced"></i><span>Balances</span></a></li>
+            <li><a href="settlement-history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Settlement History</span></a></li>
+        </ul>
+        <div class="sidebar-user">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-initial">-</div>
+                <div class="user-name" id="user-profile-name">Loading...</div>
+            </div>
+            <button onclick="logout()" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem;">
+                <i class="fa-solid fa-right-from-bracket"></i> Log Out
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Group Expenses</h1>
+                <p>Record group bills and specify who contributed what, and who is splitting the share.</p>
+            </div>
+        </header>
+
+        <!-- Content Grid (Form + List) -->
+        <section class="content-grid">
+            <!-- Record Group Expense Card -->
+            <div class="card">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:1.25rem;">Record Shared Expense</h2>
+                <form id="group-expense-form">
+                    <div class="form-group">
+                        <label for="ge-group">Select Group</label>
+                        <select id="ge-group" class="form-control" required>
+                            <option value="">Select Group...</option>
+                        </select>
+                    </div>
+
+                    <div id="expense-inputs-area" style="display: none; display: flex; flex-direction: column; gap: 1.25rem;">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="ge-title">Expense Title</label>
+                            <input type="text" id="ge-title" class="form-control" placeholder="e.g., Dinner at Cafe" required>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="ge-amount">Total Bill Amount (Rs.)</label>
+                            <input type="number" step="0.01" min="0.01" id="ge-amount" class="form-control" placeholder="e.g., 2000" required>
+                        </div>
+
+                        <!-- Contributions Area -->
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Who Paid? (Enter contribution per member)</label>
+                            <div class="contributor-list-form" id="contributor-inputs-list">
+                                <!-- Dynamic member list with input boxes will render here -->
+                            </div>
+                        </div>
+
+                        <!-- Participants Area -->
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Split Who? (Select participants responsible for share)</label>
+                            <div class="checkbox-list" id="participant-checkboxes-list">
+                                <!-- Dynamic member checkboxes will render here -->
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Record Shared Expense</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Group Expenses List Table -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; gap:1rem;">
+                    <h2 style="font-size: 1.25rem; font-weight:600;">Expense History</h2>
+                    <select id="filter-group-selector" class="form-control" style="width: auto; max-width: 200px;">
+                        <option value="">Select Group...</option>
+                    </select>
+                </div>
+                
+                <div class="table-container">
+                    <table class="table" id="group-expenses-table">
+                        <thead>
+                            <tr>
+                                <th>Bill Title</th>
+                                <th>Amount</th>
+                                <th>Paid Contributions</th>
+                                <th>Split Roster</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-muted);">Please select a group above to filter historical records.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/group-expenses.js"></script>
+</body>
+</html>

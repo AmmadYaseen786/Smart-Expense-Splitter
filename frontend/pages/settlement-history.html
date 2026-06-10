@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Splitter - Settlement History</title>
+    <!-- Outfit Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">S</div>
+            <div class="logo-text">Splitter</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+            <li><a href="groups.html"><i class="fa-solid fa-users"></i><span>Groups</span></a></li>
+            <li><a href="group-expenses.html"><i class="fa-solid fa-file-invoice-dollar"></i><span>Group Expenses</span></a></li>
+            <li><a href="personal-expenses.html"><i class="fa-solid fa-user-lock"></i><span>Personal Expenses</span></a></li>
+            <li><a href="balances.html"><i class="fa-solid fa-scale-balanced"></i><span>Balances</span></a></li>
+            <li class="active"><a href="settlement-history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>Settlement History</span></a></li>
+        </ul>
+        <div class="sidebar-user">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-initial">-</div>
+                <div class="user-name" id="user-profile-name">Loading...</div>
+            </div>
+            <button onclick="logout()" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem;">
+                <i class="fa-solid fa-right-from-bracket"></i> Log Out
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Settlement History</h1>
+                <p>Track all completed and partial payments recorded to clear group debts.</p>
+            </div>
+        </header>
+
+        <!-- Settlement History Table Layout -->
+        <section class="content-grid single">
+            <div class="card">
+                <h2 style="font-size: 1.25rem; font-weight:600; margin-bottom:1.25rem;">Settlement Logs</h2>
+                <div class="table-container">
+                    <table class="table" id="settlements-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Group</th>
+                                <th>Payer</th>
+                                <th>Receiver</th>
+                                <th>Amount</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading settlements...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/settlement-history.js"></script>
+</body>
+</html>
